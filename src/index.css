@@ -1,13 +1,288 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.calendarPage {
+  padding: 0px 15px;
+}
+
+/* range page start */
+
+.headCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.monthSelectCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px;
+  width: 150px;
+  height: 30px;
+  box-shadow: 0px 0px 10px #afadad;
+}
+
+.selectBox {
+  color: blue;
+  border: 0;
+  outline: 0;
+}
+
+.arrowCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.arrowCardHide {
+  display: none;
+}
+
+.arrowBox {
+  border: 3px solid blue;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.rangeCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+}
+
+.rangeButton {
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+}
+
+.rangeButtonSelected {
+  border-bottom: 5px solid blue;
+}
+
+/* range page end */
+
+/* month page start */
+
+.calendarCard {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(247, 244, 244, 0.3);
+}
+
+.calendarRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.calendarCol {
+  border: 1px solid rgb(236, 232, 232, 0.3);
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  padding: 10px 0px;
+}
+
+/* month page end */
+
+/* week page start */
+.weekView {
+  width: 100%;
+  background-color: rgba(247, 244, 244, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.weekHead {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.weekHeadDetails {
+  border: 1px solid rgb(236, 232, 232, 0.3);
+  height: 40px;
+  width: 12.5%;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.timeHeadDetails {
+  height: 40px;
+  width: 12.5%;
+  padding: 10px;
+  text-align: right;
+}
+
+.timeValue {
+  margin-top: 35px;
+  color: blue;
+  font-weight: 600;
+}
+
+/* week page end */
+
+/* today page start */
+
+.todayPage {
+  background-color: rgba(247, 244, 244, 0.3);
+  padding: 10px;
+}
+
+.eventCard {
+  margin: 15px;
+  width: 200px;
+  padding: 3px;
+  background-color: #fff;
+  border-left: 15px solid blue;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px grey;
+  font-weight: 500;
+}
+
+.eventCardLength {
+  position: relative;
+}
+
+.totalCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border-radius: 100%;
+  padding: 3px 8px;
+  background-color: rgb(227, 208, 4);
+}
+
+/* today page end */
+
+/* popup page start */
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popupContent {
+  position: relative;
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popupCloseButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  border: 0;
+  border-radius: 100%;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.popupDetailCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid grey;
+}
+
+.popupDetailText {
+  border-right: 2px solid grey;
+  font-weight: 500;
+  text-align: left;
+  padding: 10px;
+}
+
+.popupMeetCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.meetPic {
+  width: 50%;
+  margin: auto;
+}
+
+.linkButton {
+  background-color: blue;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+  width: 60px;
+  height: 30px;
+  padding: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.eventCardPopup {
+  margin: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border-left: 15px solid blue;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px grey;
+  font-weight: 500;
+}
+
+/* popup page end */
+
+@media screen and (max-width: 640px) {
 }
