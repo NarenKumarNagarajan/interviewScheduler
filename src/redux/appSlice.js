@@ -5,7 +5,7 @@ const appSlice = createSlice({
   initialState: {
     selectedMonth: new Date().getMonth(),
     selectedYear: new Date().getFullYear(),
-    rangeSelected: "Week",
+    rangeSelected: "Month",
   },
   reducers: {
     changeSelectedMonth: (state, action) => {
