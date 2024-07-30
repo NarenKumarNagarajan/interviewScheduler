@@ -16,6 +16,7 @@ export const MONTHS_NAMES = [
 export const DATE_RANGE = ["Today", "Week", "Month", "Year"];
 
 export const TIME_RANGE = [
+  "",
   "09 AM",
   "10 AM",
   "11 AM",

@@ -102,14 +102,32 @@ body {
   border: 1px solid rgb(236, 232, 232, 0.3);
   text-align: center;
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eventsCard {
+  background-color: rgb(227, 208, 4);
+  font-weight: 500;
+  height: 100%;
+  width: 90%;
+  margin: 0px 10px;
+  cursor: pointer;
+}
+
+.monthColor {
+  color: blue;
+  font-size: 20px;
 }
 
 /* month page end */
 
 /* week page start */
-.weekView {
+/* .weekView {
   width: 100%;
   background-color: rgba(247, 244, 244, 0.3);
   display: flex;
@@ -157,6 +175,59 @@ body {
   margin-top: 35px;
   color: blue;
   font-weight: 600;
+} */
+
+.weekView {
+  width: 100%;
+  background-color: rgba(247, 244, 244, 0.3);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.timeCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+}
+
+.eachTime {
+  height: 40px;
+  text-align: right;
+  padding: 10px;
+}
+
+.timeValue {
+  margin-top: 1px;
+  color: blue;
+  font-weight: 600;
+}
+
+.weekCard {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.weekHead {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.weekHeadContent {
+  text-align: center;
+  border: 1px solid rgb(236, 232, 232, 0.3);
+  height: 40px;
+  padding: 10px;
+  width: 100%;
 }
 
 /* week page end */
@@ -166,6 +237,10 @@ body {
 .todayPage {
   background-color: rgba(247, 244, 244, 0.3);
   padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .eventCard {

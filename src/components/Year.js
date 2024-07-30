@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { format, parseISO } from "date-fns";
 
 import PopUp from "./PopUp";
 import PopUpMeeting from "./PopUpMeeting";
@@ -11,7 +12,10 @@ const Year = () => {
   const [meetingID, setMeetingID] = useState(null);
   const [allMeetings, setAllMeetings] = useState([]);
   const [timeDetail, setTimeDetail] = useState("");
+
   const getData = useGetData();
+  const dataKeys = Object.keys(getData);
+  const isEmpty = dataKeys.length === 0;
 
   const handleEventCardClick = (meeting, timeSlot) => {
     setAllMeetings(meeting);
@@ -29,8 +33,11 @@ const Year = () => {
     setIsMeetingPopupVisible(false);
   };
 
-  const dataKeys = Object.keys(getData);
-  const isEmpty = dataKeys.length === 0;
+  const changeDateFormat = (date) => {
+    const parseDate = parseISO(date);
+    const formattedDate = format(parseDate, "dd MMMM yyyy");
+    return formattedDate;
+  };
 
   return isEmpty ? (
     <div>No Events for Today</div>
@@ -65,6 +72,7 @@ const Year = () => {
                 <p>{firstEvent.jobRole}</p>
                 <p>{`Interviewer: ${firstEvent.interviewer}`}</p>
                 <p>{`Time: ${timeSlot}`}</p>
+                <p>{`Date: ${changeDateFormat(dateKey)}`}</p>
               </div>
             );
           });

@@ -18,11 +18,11 @@ const useWeekOfMonth = () => {
   const firstDayOfMonth = startOfMonth(new Date(selectedYear, selectedMonth));
   const lastDayOfMonth = endOfMonth(new Date(selectedYear, selectedMonth));
 
-  let currentWeekStart = startOfWeek(firstDayOfMonth, { weekStartsOn: 1 }); // Monday
+  let currentWeekStart = startOfWeek(firstDayOfMonth, { weekStartsOn: 1 });
   let currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 });
 
   while (currentWeekStart <= lastDayOfMonth) {
-    const week = [{ date: "", dayName: "" }]; // Add an empty string at the start of each week
+    const week = [];
     eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd }).forEach(
       (day) => {
         if (isSameMonth(day, firstDayOfMonth)) {
