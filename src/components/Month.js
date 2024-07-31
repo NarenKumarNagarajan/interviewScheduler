@@ -46,7 +46,12 @@ const Month = () => {
                     {monthCol}
                   </span>{" "}
                   <br />
-                  <span>{dataByDate && `${dataByDate.length} Events`}</span>
+                  <span>
+                    {dataByDate &&
+                      `${dataByDate.length} ${
+                        dataByDate.length <= 1 ? "Event" : "Events"
+                      }`}
+                  </span>
                 </div>
               </div>
             );

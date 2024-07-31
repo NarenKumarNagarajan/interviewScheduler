@@ -130,55 +130,71 @@ body {
 
 .weekView {
   width: 100%;
-  background-color: rgba(247, 244, 244, 0.3);
+  background-color: rgba(99, 93, 93, 0.3);
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .timeCard {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 10%;
+  width: 100%;
 }
 
 .eachTime {
-  height: 40px;
+  height: 60px;
   text-align: right;
-  padding: 10px;
+  padding: 10px 5px;
 }
 
 .timeValue {
-  margin-top: 35px;
+  margin-top: -20px;
   color: blue;
   font-weight: 600;
 }
 
-.weekCard {
-  width: 90%;
+.weekEventCard {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.headContent {
+  padding: 10px;
 }
 
 .weekHead {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  text-align: center;
+  height: 80px;
   width: 100%;
+  border: 1px solid rgba(236, 232, 232, 0.3);
+  border-top: none;
+  border-bottom: none;
 }
 
-.weekHeadContent {
-  text-align: center;
-  border: 1px solid rgb(236, 232, 232, 0.3);
-  height: 40px;
-  padding: 10px;
-  width: 100%;
+.weekHeadBorder {
+  border: 1px solid rgba(236, 232, 232, 0.3);
+  border-left: none;
+  border-right: none;
+}
+
+.weekWithEvent {
+  position: relative;
+  height: 80px;
+  background-color: #fff;
+  border-left: 15px solid blue;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* week page end */
@@ -310,5 +326,5 @@ body {
 
 /* popup page end */
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 768px) {
 }
