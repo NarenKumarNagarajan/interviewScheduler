@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { changeWeekIndex } from "../redux/dataSlice";
 
+import { changeWeekIndex } from "../redux/dataSlice";
 import { MONTHS_NAMES } from "../globalValues/globalConstants";
 import { changeSelectedMonth, changeSelectedYear } from "../redux/appSlice";
 

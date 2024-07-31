@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import {
   addHours,
-  differenceInHours,
   format,
   parse,
   parseISO,
@@ -130,11 +129,6 @@ const Week = () => {
                     const endAdjustTime = adjustTime(getEndTime);
                     const eachTimeEvent = eventByTime[timeKeys];
                     const lengthByTime = eachTimeEvent.length;
-
-                    const hoursDifference = differenceInHours(
-                      startAdjustTime,
-                      endAdjustTime
-                    );
 
                     return currentAdjustTime >= startAdjustTime &&
                       currentAdjustTime < endAdjustTime ? (

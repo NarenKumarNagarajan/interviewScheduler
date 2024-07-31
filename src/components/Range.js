@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 import { DATE_RANGE } from "../globalValues/globalConstants";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import {
@@ -6,7 +8,7 @@ import {
   changeSelectedMonth,
   changeSelectedYear,
 } from "../redux/appSlice";
-import { v4 as uuidv4 } from "uuid";
+
 import { changeWeekIndex } from "../redux/dataSlice";
 
 const Range = () => {

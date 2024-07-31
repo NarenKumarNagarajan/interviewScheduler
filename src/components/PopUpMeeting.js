@@ -22,8 +22,6 @@ const PopUpMeeting = ({ onClose, meetingID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Parse the ISO date string into a Date object
-
   if (isEmpty > 0) {
     parseStartDate = parseISO(meetingData.start);
     parseEndDate = parseISO(meetingData.end);
@@ -33,7 +31,6 @@ const PopUpMeeting = ({ onClose, meetingID }) => {
   }
 
   const fetchEvents = async () => {
-    // Construct URL with query parameters
     const url = new URL(
       "http://52.35.66.255:8000/calendar_app/api/calendar_meeting"
     );
