@@ -325,6 +325,56 @@ body {
 }
 
 /* popup page end */
+@media screen and (min-width: 769px) and (max-width: 960px) {
+  .popupContent {
+    padding: 5px;
+    width: 80%;
+  }
+
+  .popupDetailText {
+    padding: 5px;
+    width: 50%;
+  }
+}
 
 @media screen and (max-width: 768px) {
+  .rangeCard {
+    width: 230px;
+  }
+
+  .calendarCol {
+    font-size: 10px;
+  }
+
+  .popupContent {
+    padding: 5px;
+    width: 90%;
+  }
+
+  .popupDetailText {
+    font-weight: 300;
+    padding: 5px;
+    width: 60%;
+  }
+
+  .popupMeetCard {
+    width: 50%;
+  }
+
+  .weekView {
+    font-size: 10px;
+  }
+
+  .headContent {
+    padding: 10px 0px;
+  }
+
+  .weekWithEvent {
+    border-left: 5px solid blue;
+    font-size: 8px;
+  }
+
+  .todayPage {
+    padding: 0px;
+  }
 }

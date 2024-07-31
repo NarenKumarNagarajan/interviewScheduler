@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import {
   addHours,
+  differenceInHours,
   format,
   parse,
   parseISO,
@@ -130,6 +131,11 @@ const Week = () => {
                     const eachTimeEvent = eventByTime[timeKeys];
                     const lengthByTime = eachTimeEvent.length;
 
+                    const hoursDifference = differenceInHours(
+                      startAdjustTime,
+                      endAdjustTime
+                    );
+
                     return currentAdjustTime >= startAdjustTime &&
                       currentAdjustTime < endAdjustTime ? (
                       <div
@@ -149,7 +155,9 @@ const Week = () => {
                               </div>
                             )}
                             <span>{eachTimeEvent[0].jobRole}</span>
+                            <br />
                             <span>{`Interviewer: ${eachTimeEvent[0].interviewer}`}</span>
+                            <br />
                             <span>{`Time: ${timeKeys}`}</span>
                           </div>
                         )}
