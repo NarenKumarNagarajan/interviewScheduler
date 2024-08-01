@@ -57,9 +57,8 @@ const Year = () => {
             return (
               <div
                 key={uuidv4()}
-                className={
-                  lengthOfTime > 1 ? "eventCard eventCardLength" : "eventCard"
-                }
+                className={`eventCard ${lengthOfTime > 1 && "eventCardLength"}
+                `}
                 onClick={() =>
                   lengthOfTime > 1
                     ? handleEventCardClick(schedules, timeSlot)

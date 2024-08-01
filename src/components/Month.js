@@ -1,15 +1,27 @@
 import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from "react-router-dom";
 
 import useMonthDetails from "../customHook/useMonthDetails";
+import PopupMonthByDate from "./PopupMonthByDate";
+import { useState } from "react";
 import useGetData from "../customHook/useGetData";
 
 const Month = () => {
+  const [isMonthPopupVisible, setIsMonthPopupVisible] = useState(false);
+  const [allDateData, setAllDateData] = useState([]);
   const monthDetails = useMonthDetails();
   const data = useGetData();
-  const navigate = useNavigate();
+
+  const handlePopupMonthByDate = (sendData) => {
+    setAllDateData(sendData);
+    setIsMonthPopupVisible(true);
+  };
+
+  const closePopup = () => {
+    setIsMonthPopupVisible(false);
+  };
 
   const dataKeys = Object.keys(data);
+
   const transformedDataKeys = dataKeys.reduce((acc, date) => {
     const day = date.split("-")[2];
     acc[day] = date;
@@ -21,10 +33,6 @@ const Month = () => {
     return date ? data[date] : null;
   };
 
-  const handleMonthEventsByDate = (dataByDate) => {
-    navigate("/month-by-date", { state: { data: dataByDate } });
-  };
-
   return (
     <div className="calendarCard">
       {monthDetails.map((monthRow) => (
@@ -32,32 +40,47 @@ const Month = () => {
           {monthRow.map((monthCol) => {
             const dataByDate = getDataByDate(monthCol);
 
-            return (
-              <div className="calendarCol" key={uuidv4()}>
-                <div
-                  className={`${dataByDate && "eventsCard"}`}
-                  onClick={
-                    dataByDate
-                      ? () => handleMonthEventsByDate(dataByDate)
-                      : undefined
-                  }
-                >
-                  <span className={`${dataByDate && "monthColor"}`}>
-                    {monthCol}
-                  </span>{" "}
+            let values;
+            let timeKeys;
+
+            if (dataByDate) {
+              timeKeys = Object.keys(dataByDate[0]);
+              values = dataByDate[0][timeKeys];
+            }
+
+            return dataByDate ? (
+              <div
+                className="calendarCol calendarColWithEvent"
+                key={uuidv4()}
+                onClick={() => handlePopupMonthByDate(dataByDate)}
+              >
+                <div className="monthColor">{monthCol}</div>
+                <div className="monthEventCard">
+                  {dataByDate.length > 1 && (
+                    <div className="totalCount">
+                      {dataByDate.length + (values.length - 1)}
+                    </div>
+                  )}
+
+                  <span>{values[0].jobRole}</span>
                   <br />
-                  <span>
-                    {dataByDate &&
-                      `${dataByDate.length} ${
-                        dataByDate.length <= 1 ? "Event" : "Events"
-                      }`}
-                  </span>
+                  <span>{`Interviewer: ${values[0].interviewer}`}</span>
+                  <br />
+                  <span>{`Time: ${timeKeys}`}</span>
                 </div>
+              </div>
+            ) : (
+              <div className="calendarCol" key={uuidv4()}>
+                {monthCol}
               </div>
             );
           })}
         </div>
       ))}
+
+      {isMonthPopupVisible && (
+        <PopupMonthByDate allDateData={allDateData} onClose={closePopup} />
+      )}
     </div>
   );
 };

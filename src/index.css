@@ -86,7 +86,9 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  flex-wrap: nowrap;
   background-color: rgba(247, 244, 244, 0.3);
+  overflow-y: auto;
 }
 
 .calendarRow {
@@ -102,26 +104,31 @@ body {
   border: 1px solid rgb(236, 232, 232, 0.3);
   text-align: center;
   width: 100%;
-  height: 60px;
+  height: 80px;
   padding: 10px 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
-.eventsCard {
-  background-color: rgb(227, 208, 4);
-  font-weight: 500;
-  height: 100%;
-  width: 90%;
-  margin: 0px 10px;
+.calendarColWithEvent {
   cursor: pointer;
+  font-size: 12px;
+}
+
+.monthEventCard {
+  padding: 3px;
+  background-color: #fff;
+  border-left: 15px solid blue;
+  border-radius: 5px;
+  width: 80%;
+  position: relative;
 }
 
 .monthColor {
   color: blue;
-  font-size: 20px;
 }
 
 /* month page end */
@@ -130,7 +137,7 @@ body {
 
 .weekView {
   width: 100%;
-  background-color: rgba(134, 129, 129, 0.3);
+  background-color: rgba(247, 244, 244, 0.3);
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -376,5 +383,15 @@ body {
 
   .todayPage {
     padding: 0px;
+  }
+
+  .monthEventCard {
+    padding: 0px;
+    border-left: 5px solid blue;
+    width: 80%;
+  }
+
+  .calendarColWithEvent {
+    font-size: 10px;
   }
 }

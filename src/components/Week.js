@@ -28,13 +28,31 @@ const formatTime = (time) => {
   return format(parsedTime, "h:mm a");
 };
 
-const adjustTime = (date) => {
-  if (date.getMinutes() > 0) {
+const adjustEndTime = (date) => {
+  if (
+    date.getMinutes() > 0 ||
+    date.getSeconds() > 0 ||
+    date.getMilliseconds() > 0
+  ) {
     date = addHours(date, 1);
   }
   date = setMinutes(date, 0);
   date = setSeconds(date, 0);
   date = setMilliseconds(date, 0);
+
+  return date.toString();
+};
+
+const adjustStartTime = (date) => {
+  if (
+    date.getMinutes() > 0 ||
+    date.getSeconds() > 0 ||
+    date.getMilliseconds() > 0
+  ) {
+    date = setMinutes(date, 0);
+    date = setSeconds(date, 0);
+    date = setMilliseconds(date, 0);
+  }
 
   return date.toString();
 };
@@ -124,9 +142,9 @@ const Week = () => {
                     const getStartTime = parse(startTime, "h:mm a", new Date());
                     const getEndTime = parse(endTime, "h:mm a", new Date());
 
-                    const currentAdjustTime = adjustTime(currentTime);
-                    const startAdjustTime = adjustTime(getStartTime);
-                    const endAdjustTime = adjustTime(getEndTime);
+                    const currentAdjustTime = adjustStartTime(currentTime);
+                    let startAdjustTime = adjustStartTime(getStartTime);
+                    let endAdjustTime = adjustEndTime(getEndTime);
                     const eachTimeEvent = eventByTime[timeKeys];
                     const lengthByTime = eachTimeEvent.length;
 
