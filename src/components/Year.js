@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { format, parseISO } from "date-fns";
 
 import PopUp from "./PopUp";
@@ -34,48 +33,52 @@ const Year = () => {
   };
 
   const changeDateFormat = (date) => {
-    const parseDate = parseISO(date);
-    const formattedDate = format(parseDate, "dd MMMM yyyy");
-    return formattedDate;
+    return format(parseISO(date), "dd MMMM yyyy");
   };
 
   return isEmpty ? (
     <div>No Events for Year</div>
   ) : (
-    <div className="todayPage">
+    <div className="yearPage">
       {dataKeys.map((dateKey) => {
         const eventsByDate = getData[dateKey];
 
-        return eventsByDate.map((eventObj) => {
-          const timeSlots = Object.keys(eventObj);
+        return (
+          <div key={dateKey} className="dateSection">
+            <h2>{changeDateFormat(dateKey)}</h2>
+            {eventsByDate.map((eventObj, index) => {
+              const timeSlots = Object.keys(eventObj);
 
-          return timeSlots.map((timeSlot) => {
-            const schedules = eventObj[timeSlot];
-            const firstEvent = schedules[0];
-            const lengthOfTime = schedules.length;
+              return timeSlots.map((timeSlot) => {
+                const schedules = eventObj[timeSlot];
+                const firstEvent = schedules[0];
+                const lengthOfTime = schedules.length;
 
-            return (
-              <div
-                key={uuidv4()}
-                className={`eventCard ${lengthOfTime > 1 && "eventCardLength"}
-                `}
-                onClick={() =>
-                  lengthOfTime > 1
-                    ? handleEventCardClick(schedules, timeSlot)
-                    : handleMeetingEventCardClick(firstEvent.id)
-                }
-              >
-                {lengthOfTime > 1 && (
-                  <div className="totalCount">{lengthOfTime}</div>
-                )}
-                <p>{firstEvent.jobRole}</p>
-                <p>{`Interviewer: ${firstEvent.interviewer}`}</p>
-                <p>{`Time: ${timeSlot}`}</p>
-                <p>{`Date: ${changeDateFormat(dateKey)}`}</p>
-              </div>
-            );
-          });
-        });
+                return (
+                  <div
+                    key={`${dateKey}-${timeSlot}-${index}`}
+                    className={`eventCard ${
+                      lengthOfTime > 1 ? "eventCardLength" : ""
+                    }`}
+                    onClick={() =>
+                      lengthOfTime > 1
+                        ? handleEventCardClick(schedules, timeSlot)
+                        : handleMeetingEventCardClick(firstEvent.id)
+                    }
+                  >
+                    {lengthOfTime > 1 && (
+                      <div className="totalCount">{lengthOfTime}</div>
+                    )}
+                    <p>{firstEvent.jobRole}</p>
+                    <p>{`Interviewer: ${firstEvent.interviewer}`}</p>
+                    <p>{`Time: ${timeSlot}`}</p>
+                    <p>{`Date: ${changeDateFormat(dateKey)}`}</p>
+                  </div>
+                );
+              });
+            })}
+          </div>
+        );
       })}
 
       {isPopupVisible && (

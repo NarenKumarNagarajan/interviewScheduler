@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 import PopUpMeeting from "./PopUpMeeting";
 
@@ -32,7 +31,7 @@ const PopupMonthByDate = ({ onClose, allDateData }) => {
             return dataByTime[timeSlots].map((eachTimeData) => (
               <div
                 className="eventCard"
-                key={uuidv4()}
+                key={eachTimeData.id}
                 onClick={() => handleMeetingEventCardClick(eachTimeData.id)}
               >
                 <p>{eachTimeData.jobRole}</p>
@@ -41,11 +40,10 @@ const PopupMonthByDate = ({ onClose, allDateData }) => {
               </div>
             ));
           })}
-
-          {isMeetingPopupVisible && (
-            <PopUpMeeting onClose={closePopup} meetingID={meetingID} />
-          )}
         </div>
+        {isMeetingPopupVisible && (
+          <PopUpMeeting onClose={closePopup} meetingID={meetingID} />
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-
+import { useState, useMemo } from "react";
 import useMonthDetails from "../customHook/useMonthDetails";
 import PopupMonthByDate from "./PopupMonthByDate";
-import { useState } from "react";
 import useGetData from "../customHook/useGetData";
 
 const Month = () => {
@@ -20,13 +18,13 @@ const Month = () => {
     setIsMonthPopupVisible(false);
   };
 
-  const dataKeys = Object.keys(data);
-
-  const transformedDataKeys = dataKeys.reduce((acc, date) => {
-    const day = date.split("-")[2];
-    acc[day] = date;
-    return acc;
-  }, {});
+  const transformedDataKeys = useMemo(() => {
+    return Object.keys(data).reduce((acc, date) => {
+      const day = date.split("-")[2];
+      acc[day] = date;
+      return acc;
+    }, {});
+  }, [data]);
 
   const getDataByDate = (day) => {
     const date = transformedDataKeys[day];
@@ -35,9 +33,9 @@ const Month = () => {
 
   return (
     <div className="calendarCard">
-      {monthDetails.map((monthRow) => (
-        <div className="calendarRow" key={uuidv4()}>
-          {monthRow.map((monthCol) => {
+      {monthDetails.map((monthRow, rowIndex) => (
+        <div className="calendarRow" key={`row-${rowIndex}`}>
+          {monthRow.map((monthCol, colIndex) => {
             const dataByDate = getDataByDate(monthCol);
 
             let values;
@@ -51,7 +49,7 @@ const Month = () => {
             return dataByDate ? (
               <div
                 className="calendarCol calendarColWithEvent"
-                key={uuidv4()}
+                key={`col-${rowIndex}-${colIndex}`}
                 onClick={() => handlePopupMonthByDate(dataByDate)}
               >
                 <div className="monthColor">{monthCol}</div>
@@ -61,7 +59,6 @@ const Month = () => {
                       {dataByDate.length + (values.length - 1)}
                     </div>
                   )}
-
                   <span>{values[0].jobRole}</span>
                   <br />
                   <span>{`Interviewer: ${values[0].interviewer}`}</span>
@@ -70,7 +67,7 @@ const Month = () => {
                 </div>
               </div>
             ) : (
-              <div className="calendarCol" key={uuidv4()}>
+              <div className="calendarCol" key={`col-${rowIndex}-${colIndex}`}>
                 {monthCol}
               </div>
             );

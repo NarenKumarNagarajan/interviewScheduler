@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
 
 import PopUp from "./PopUp";
@@ -9,15 +8,15 @@ import useGetData from "../customHook/useGetData";
 const Today = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isMeetingPopupVisible, setIsMeetingPopupVisible] = useState(false);
-  const [meetingID, setMeetingID] = useState({});
-  const [allMeetings, setAllMeeting] = useState({});
+  const [meetingID, setMeetingID] = useState(null);
+  const [allMeetings, setAllMeetings] = useState([]);
   const [timeDetail, setTimeDetail] = useState("");
-  const data = useGetData();
-  const currentDate = new Date();
-  const todayDate = format(currentDate, "yyyy-MM-dd");
 
-  const handleEventCardClick = (meeting, timeSlot) => {
-    setAllMeeting(meeting);
+  const data = useGetData();
+  const todayDate = format(new Date(), "yyyy-MM-dd");
+
+  const handleEventCardClick = (meetings, timeSlot) => {
+    setAllMeetings(meetings);
     setTimeDetail(timeSlot);
     setIsPopupVisible(true);
   };
@@ -32,27 +31,27 @@ const Today = () => {
     setIsMeetingPopupVisible(false);
   };
 
-  const isEmpty = Object.keys(data).length;
+  if (!Object.keys(data).length) {
+    return <div>No Events for Today</div>;
+  }
 
-  return isEmpty === 0 ? (
-    <div>No Events for Today</div>
-  ) : (
+  return (
     <div className="todayPage">
       {data[todayDate] &&
-        data[todayDate].map((eventObj) => {
+        data[todayDate].map((eventObj, index) => {
           const timeSlots = Object.keys(eventObj);
 
           return timeSlots.map((timeSlot) => {
             const schedules = eventObj[timeSlot];
-            const firstEvent = schedules[0];
             const lengthOfTime = schedules.length;
+            const firstEvent = schedules[0];
 
             return (
               <div
-                key={uuidv4()}
-                className={
-                  lengthOfTime > 1 ? "eventCard eventCardLength" : "eventCard"
-                }
+                key={timeSlot + index}
+                className={`eventCard ${
+                  lengthOfTime > 1 ? "eventCardLength" : ""
+                }`}
                 onClick={() =>
                   lengthOfTime > 1
                     ? handleEventCardClick(schedules, timeSlot)

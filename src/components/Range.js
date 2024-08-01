@@ -1,55 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import { DATE_RANGE } from "../globalValues/globalConstants";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import {
   changeRange,
   changeSelectedMonth,
   changeSelectedYear,
 } from "../redux/appSlice";
-
 import { changeWeekIndex } from "../redux/dataSlice";
 
 const Range = () => {
   const dispatch = useDispatch();
-  const rangeSelected = useSelector((state) => state.appSlice.rangeSelected);
-  const selectedMonth = useSelector((state) => state.appSlice.selectedMonth);
-  const selectedYear = useSelector((state) => state.appSlice.selectedYear);
-  const weekIndex = useSelector((state) => state.dataSlice.weekIndex);
-  const weekLength = useSelector((state) => state.dataSlice.weekLength);
+  const { rangeSelected, selectedMonth, selectedYear } = useSelector(
+    (state) => state.appSlice
+  );
+  const { weekIndex, weekLength } = useSelector((state) => state.dataSlice);
 
   const goForward = () => {
     if (rangeSelected === "Month") {
-      if (selectedMonth === 11) {
-        dispatch(changeSelectedMonth(0));
-        dispatch(changeSelectedYear(selectedYear + 1));
-      } else {
-        dispatch(changeSelectedMonth(selectedMonth + 1));
-      }
-    }
-
-    if (rangeSelected === "Week") {
-      if (weekIndex < weekLength - 1) {
-        dispatch(changeWeekIndex(weekIndex + 1));
-      }
+      const newMonth = selectedMonth === 11 ? 0 : selectedMonth + 1;
+      const newYear = selectedMonth === 11 ? selectedYear + 1 : selectedYear;
+      dispatch(changeSelectedMonth(newMonth));
+      if (newYear !== selectedYear) dispatch(changeSelectedYear(newYear));
+    } else if (rangeSelected === "Week" && weekIndex < weekLength - 1) {
+      dispatch(changeWeekIndex(weekIndex + 1));
     }
   };
 
   const goBackward = () => {
     if (rangeSelected === "Month") {
-      if (selectedMonth === 0) {
-        dispatch(changeSelectedMonth(11));
-        dispatch(changeSelectedYear(selectedYear - 1));
-      } else {
-        dispatch(changeSelectedMonth(selectedMonth - 1));
-      }
-    }
-
-    if (rangeSelected === "Week") {
-      if (weekIndex > 0) {
-        dispatch(changeWeekIndex(weekIndex - 1));
-      }
+      const newMonth = selectedMonth === 0 ? 11 : selectedMonth - 1;
+      const newYear = selectedMonth === 0 ? selectedYear - 1 : selectedYear;
+      dispatch(changeSelectedMonth(newMonth));
+      if (newYear !== selectedYear) dispatch(changeSelectedYear(newYear));
+    } else if (rangeSelected === "Week" && weekIndex > 0) {
+      dispatch(changeWeekIndex(weekIndex - 1));
     }
   };
 
@@ -66,9 +51,9 @@ const Range = () => {
       <div className="rangeCard">
         {DATE_RANGE.map((range) => (
           <button
-            key={uuidv4()}
+            key={range}
             className={`rangeButton ${
-              range === rangeSelected && "rangeButtonSelected"
+              range === rangeSelected ? "rangeButtonSelected" : ""
             }`}
             onClick={() => dispatch(changeRange(range))}
           >

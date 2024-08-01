@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import {
   endOfMonth,
   endOfYear,
@@ -24,36 +24,33 @@ const Calendar = () => {
   const selectedYear = useSelector((state) => state.appSlice.selectedYear);
   const FirstLastDayOfWeek = useWeekDates();
 
-  let formattedFirstDay = "";
-  let formattedLastDay = "";
+  const { formattedFirstDay, formattedLastDay } = useMemo(() => {
+    let formattedFirstDay = "";
+    let formattedLastDay = "";
 
-  if (rangeSelected === "Today") {
-    const currentDate = new Date();
-    formattedFirstDay = format(currentDate, "yyyy-MM-dd");
-    formattedLastDay = format(currentDate, "yyyy-MM-dd");
-  } else if (rangeSelected === "Week") {
-    formattedFirstDay = FirstLastDayOfWeek[0];
-    formattedLastDay = FirstLastDayOfWeek[1];
-  } else if (rangeSelected === "Month") {
-    const firstDay = startOfMonth(new Date(selectedYear, selectedMonth));
-    const lastDay = endOfMonth(new Date(selectedYear, selectedMonth));
-    formattedFirstDay = format(firstDay, "yyyy-MM-dd");
-    formattedLastDay = format(lastDay, "yyyy-MM-dd");
-  } else if (rangeSelected === "Year") {
-    const firstDay = startOfYear(new Date(selectedYear, 0));
-    const lastDay = endOfYear(new Date(selectedYear, 0));
+    if (rangeSelected === "Today") {
+      const currentDate = new Date();
+      formattedFirstDay = format(currentDate, "yyyy-MM-dd");
+      formattedLastDay = format(currentDate, "yyyy-MM-dd");
+    } else if (rangeSelected === "Week") {
+      formattedFirstDay = FirstLastDayOfWeek[0];
+      formattedLastDay = FirstLastDayOfWeek[1];
+    } else if (rangeSelected === "Month") {
+      const firstDay = startOfMonth(new Date(selectedYear, selectedMonth));
+      const lastDay = endOfMonth(new Date(selectedYear, selectedMonth));
+      formattedFirstDay = format(firstDay, "yyyy-MM-dd");
+      formattedLastDay = format(lastDay, "yyyy-MM-dd");
+    } else if (rangeSelected === "Year") {
+      const firstDay = startOfYear(new Date(selectedYear, 0));
+      const lastDay = endOfYear(new Date(selectedYear, 0));
+      formattedFirstDay = format(firstDay, "yyyy-MM-dd");
+      formattedLastDay = format(lastDay, "yyyy-MM-dd");
+    }
 
-    formattedFirstDay = format(firstDay, "yyyy-MM-dd");
-    formattedLastDay = format(lastDay, "yyyy-MM-dd");
-  }
+    return { formattedFirstDay, formattedLastDay };
+  }, [rangeSelected, FirstLastDayOfWeek, selectedMonth, selectedYear]);
 
-  useEffect(() => {
-    fetchEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formattedFirstDay, formattedLastDay]);
-
-  const fetchEvents = async () => {
-    // Construct URL with query parameters
+  const fetchEvents = useCallback(async () => {
     const url = new URL("http://52.35.66.255:8000/calendar_app/api/calendar");
     const params = {
       from_date: formattedFirstDay,
@@ -73,7 +70,11 @@ const Calendar = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [dispatch, formattedFirstDay, formattedLastDay]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   return (
     <div className="calendarPage">

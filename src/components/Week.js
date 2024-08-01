@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -19,13 +18,11 @@ import PopUp from "./PopUp";
 import PopUpMeeting from "./PopUpMeeting";
 
 const formatDate = (date) => {
-  const dateObject = parseISO(date);
-  return format(dateObject, "dd MMM");
+  return format(parseISO(date), "dd MMM");
 };
 
 const formatTime = (time) => {
-  const parsedTime = parse(time, "hh a", new Date());
-  return format(parsedTime, "h:mm a");
+  return format(parse(time, "hh a", new Date()), "h:mm a");
 };
 
 const adjustEndTime = (date) => {
@@ -36,25 +33,11 @@ const adjustEndTime = (date) => {
   ) {
     date = addHours(date, 1);
   }
-  date = setMinutes(date, 0);
-  date = setSeconds(date, 0);
-  date = setMilliseconds(date, 0);
-
-  return date.toString();
+  return setMilliseconds(setSeconds(setMinutes(date, 0), 0), 0).toString();
 };
 
 const adjustStartTime = (date) => {
-  if (
-    date.getMinutes() > 0 ||
-    date.getSeconds() > 0 ||
-    date.getMilliseconds() > 0
-  ) {
-    date = setMinutes(date, 0);
-    date = setSeconds(date, 0);
-    date = setMilliseconds(date, 0);
-  }
-
-  return date.toString();
+  return setMilliseconds(setSeconds(setMinutes(date, 0), 0), 0).toString();
 };
 
 const Week = () => {
@@ -106,7 +89,7 @@ const Week = () => {
     <div className="weekView">
       <div className="timeCard">
         {TIME_RANGE.map((time) => (
-          <div className="eachTime" key={uuidv4()}>
+          <div className="eachTime" key={time}>
             <p className="timeValue">{time}</p>
           </div>
         ))}
@@ -116,9 +99,9 @@ const Week = () => {
         const dataByDate = getDataByDate(date);
 
         return (
-          <div className="weekEventCard" key={uuidv4()}>
+          <div className="weekEventCard" key={week.date}>
             {TIME_RANGE.map((time, timeIndex) => (
-              <div className="weekHead" key={uuidv4()}>
+              <div className="weekHead" key={timeIndex}>
                 {timeIndex === 0 ? (
                   <div className="headContent">
                     {week.date && (
@@ -143,8 +126,8 @@ const Week = () => {
                     const getEndTime = parse(endTime, "h:mm a", new Date());
 
                     const currentAdjustTime = adjustStartTime(currentTime);
-                    let startAdjustTime = adjustStartTime(getStartTime);
-                    let endAdjustTime = adjustEndTime(getEndTime);
+                    const startAdjustTime = adjustStartTime(getStartTime);
+                    const endAdjustTime = adjustEndTime(getEndTime);
                     const eachTimeEvent = eventByTime[timeKeys];
                     const lengthByTime = eachTimeEvent.length;
 
@@ -152,7 +135,7 @@ const Week = () => {
                       currentAdjustTime < endAdjustTime ? (
                       <div
                         className="weekWithEvent"
-                        key={uuidv4()}
+                        key={timeKeys}
                         onClick={() =>
                           lengthByTime > 1
                             ? handleEventCardClick(eachTimeEvent, timeKeys)
@@ -175,11 +158,11 @@ const Week = () => {
                         )}
                       </div>
                     ) : (
-                      <div className="weekHeadBorder" key={uuidv4()}></div>
+                      <div className="weekHeadBorder" key={timeKeys}></div>
                     );
                   })
                 ) : (
-                  <div className="weekHeadBorder" key={uuidv4()}></div>
+                  <div className="weekHeadBorder" key={timeIndex}></div>
                 )}
               </div>
             ))}

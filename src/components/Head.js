@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-
 import { changeWeekIndex } from "../redux/dataSlice";
 import { MONTHS_NAMES } from "../globalValues/globalConstants";
 import { changeSelectedMonth, changeSelectedYear } from "../redux/appSlice";
+
+const years = Array.from({ length: 11 }, (_, i) => 2020 + i);
 
 const Head = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Head = () => {
           onChange={handleChangeMonth}
         >
           {MONTHS_NAMES.map((month, index) => (
-            <option key={uuidv4()} value={index}>
+            <option key={index} value={index}>
               {month}
             </option>
           ))}
@@ -40,7 +40,7 @@ const Head = () => {
           value={selectedYear}
           onChange={handleChangeYear}
         >
-          {Array.from({ length: 11 }, (_, i) => 2020 + i).map((year) => (
+          {years.map((year) => (
             <option key={year} value={year}>
               {year}
             </option>
