@@ -40,7 +40,7 @@ const Year = () => {
   };
 
   return isEmpty ? (
-    <div>No Events for Today</div>
+    <div>No Events for Year</div>
   ) : (
     <div className="todayPage">
       {dataKeys.map((dateKey) => {
