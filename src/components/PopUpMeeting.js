@@ -47,7 +47,7 @@ const PopUpMeeting = ({ onClose, meetingID }) => {
   }, [meetingID]);
 
   if (!meetingData) return null;
-
+  console.log(meetingData);
   return (
     <div className="popupOverlay">
       <div className="popupContent">
@@ -58,7 +58,7 @@ const PopUpMeeting = ({ onClose, meetingID }) => {
           <div className="popupDetailText">
             <p>{`Interview With: ${meetingData.user_det.candidate.candidate_firstName} ${meetingData.user_det.candidate.candidate_lastName}`}</p>
             <p>{`Position: ${meetingData.job_id.jobRequest_Role}`}</p>
-            <p>{`Created By: ${meetingData.job_id.jobRequest_createdBy.userRole}`}</p>
+            <p>{`Created By: ${meetingData.user_det.handled_by.userRole}`}</p>
             <p>{`Interview Date: ${formattedDetails.formattedDate}`}</p>
             <p>{`Interview Time: ${formattedDetails.formattedStartTime} - ${formattedDetails.formattedEndTime}`}</p>
             <p>{`Interview Via: Google Meet`}</p>

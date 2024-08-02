@@ -40,10 +40,19 @@ const Month = () => {
 
             let values;
             let timeKeys;
+            let totalInterviews = 0;
 
             if (dataByDate) {
               timeKeys = Object.keys(dataByDate[0]);
               values = dataByDate[0][timeKeys];
+
+              dataByDate.forEach((slot) => {
+                for (const time in slot) {
+                  if (slot.hasOwnProperty(time)) {
+                    totalInterviews += slot[time].length;
+                  }
+                }
+              });
             }
 
             return dataByDate ? (
@@ -54,10 +63,8 @@ const Month = () => {
               >
                 <div className="monthColor">{monthCol}</div>
                 <div className="monthEventCard">
-                  {dataByDate.length > 1 && (
-                    <div className="totalCount">
-                      {dataByDate.length + (values.length - 1)}
-                    </div>
+                  {totalInterviews > 1 && (
+                    <div className="totalCount">{totalInterviews}</div>
                   )}
                   <span>{values[0].jobRole}</span>
                   <br />

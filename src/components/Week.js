@@ -88,20 +88,23 @@ const Week = () => {
   return (
     <div className="weekView">
       <div className="timeCard">
-        {TIME_RANGE.map((time) => (
-          <div className="eachTime" key={time}>
+        {TIME_RANGE.map((time, timeIndex) => (
+          <div className="eachTime" key={`time-${timeIndex}`}>
             <p className="timeValue">{time}</p>
           </div>
         ))}
       </div>
-      {weeksDetails[weekIndex].map((week) => {
+      {weeksDetails[weekIndex].map((week, weekIndex) => {
         const date = week.date.slice(-2);
         const dataByDate = getDataByDate(date);
 
         return (
-          <div className="weekEventCard" key={week.date}>
+          <div className="weekEventCard" key={`week-${week.date || weekIndex}`}>
             {TIME_RANGE.map((time, timeIndex) => (
-              <div className="weekHead" key={timeIndex}>
+              <div
+                className="weekHead"
+                key={`time-${week.date || weekIndex}-${timeIndex}`}
+              >
                 {timeIndex === 0 ? (
                   <div className="headContent">
                     {week.date && (
@@ -113,7 +116,7 @@ const Week = () => {
                     {week.dayName}
                   </div>
                 ) : dataByDate ? (
-                  dataByDate.map((eventByTime) => {
+                  dataByDate.map((eventByTime, eventIndex) => {
                     const timeKeys = Object.keys(eventByTime)[0];
                     const [startTime, endTime] = timeKeys.split(" - ");
 
@@ -135,7 +138,9 @@ const Week = () => {
                       currentAdjustTime < endAdjustTime ? (
                       <div
                         className="weekWithEvent"
-                        key={timeKeys}
+                        key={`event-${
+                          week.date || weekIndex
+                        }-${timeKeys}-${eventIndex}`}
                         onClick={() =>
                           lengthByTime > 1
                             ? handleEventCardClick(eachTimeEvent, timeKeys)
@@ -158,11 +163,19 @@ const Week = () => {
                         )}
                       </div>
                     ) : (
-                      <div className="weekHeadBorder" key={timeKeys}></div>
+                      <div
+                        className="weekHeadBorder"
+                        key={`border-${
+                          week.date || weekIndex
+                        }-${timeKeys}-${eventIndex}`}
+                      ></div>
                     );
                   })
                 ) : (
-                  <div className="weekHeadBorder" key={timeIndex}></div>
+                  <div
+                    className="weekHeadBorder"
+                    key={`empty-${week.date || weekIndex}-${timeIndex}`}
+                  ></div>
                 )}
               </div>
             ))}
