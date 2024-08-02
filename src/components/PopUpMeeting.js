@@ -47,7 +47,7 @@ const PopUpMeeting = ({ onClose, meetingID }) => {
   }, [meetingID]);
 
   if (!meetingData) return null;
-  console.log(meetingData);
+
   return (
     <div className="popupOverlay">
       <div className="popupContent">

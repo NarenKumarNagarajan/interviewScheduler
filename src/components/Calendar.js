@@ -15,14 +15,14 @@ import Week from "./Week";
 import Month from "./Month";
 import Year from "./Year";
 import { addEventsData } from "../redux/dataSlice";
-import useWeekDates from "../customHook/useWeekDates";
+import useWeekFetch from "../customHook/useWeekFetch";
 
 const Calendar = () => {
   const dispatch = useDispatch();
   const rangeSelected = useSelector((state) => state.appSlice.rangeSelected);
   const selectedMonth = useSelector((state) => state.appSlice.selectedMonth);
   const selectedYear = useSelector((state) => state.appSlice.selectedYear);
-  const FirstLastDayOfWeek = useWeekDates();
+  const FirstLastDayOfWeek = useWeekFetch();
 
   const { formattedFirstDay, formattedLastDay } = useMemo(() => {
     let formattedFirstDay = "";

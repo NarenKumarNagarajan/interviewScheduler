@@ -6,13 +6,13 @@ import {
   startOfWeek,
 } from "date-fns";
 import { useSelector } from "react-redux";
-import useWeekOfMonth from "./useWeekOfMonth";
+import useWeekDetails from "./useWeekDetails";
 
-const useWeekDates = () => {
+const useWeekFetch = () => {
   const selectedMonth = useSelector((state) => state.appSlice.selectedMonth);
   const selectedYear = useSelector((state) => state.appSlice.selectedYear);
   const weekIndex = useSelector((state) => state.dataSlice.weekIndex);
-  const weeksDetails = useWeekOfMonth();
+  const weeksDetails = useWeekDetails();
   const eachWeek = weeksDetails[weekIndex];
 
   const parseDate = (dateString) => {
@@ -51,4 +51,4 @@ const useWeekDates = () => {
   return [formattedFirstDayOfWeek, formattedLastDayOfWeek];
 };
 
-export default useWeekDates;
+export default useWeekFetch;

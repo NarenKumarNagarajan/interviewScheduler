@@ -10,13 +10,14 @@ import {
   setSeconds,
 } from "date-fns";
 
-import useWeekOfMonth from "../customHook/useWeekOfMonth";
+import useWeekDetails from "../customHook/useWeekDetails";
 import { changeWeekLength } from "../redux/dataSlice";
 import { TIME_RANGE } from "../globalValues/globalConstants";
 import useGetData from "../customHook/useGetData";
 import PopUp from "./PopUp";
 import PopUpMeeting from "./PopUpMeeting";
 
+/* helper functions */
 const formatDate = (date) => {
   return format(parseISO(date), "dd MMM");
 };
@@ -40,6 +41,8 @@ const adjustStartTime = (date) => {
   return setMilliseconds(setSeconds(setMinutes(date, 0), 0), 0).toString();
 };
 
+/* helper functions */
+
 const Week = () => {
   const [isMeetingPopupVisible, setIsMeetingPopupVisible] = useState(false);
   const [meetingID, setMeetingID] = useState(null);
@@ -48,8 +51,10 @@ const Week = () => {
   const [timeDetail, setTimeDetail] = useState("");
 
   const dispatch = useDispatch();
-  const weeksDetails = useWeekOfMonth();
+
+  const weeksDetails = useWeekDetails();
   const weekIndex = useSelector((state) => state.dataSlice.weekIndex);
+
   const data = useGetData();
 
   const transformedDataKeys = useMemo(() => {
@@ -69,6 +74,7 @@ const Week = () => {
     dispatch(changeWeekLength(weeksDetails.length));
   }, [weeksDetails, dispatch]);
 
+  /* for popup */
   const handleMeetingEventCardClick = (meetID) => {
     setMeetingID(meetID);
     setIsMeetingPopupVisible(true);
@@ -84,6 +90,8 @@ const Week = () => {
     setIsPopupVisible(false);
     setIsMeetingPopupVisible(false);
   };
+
+  /* for popup */
 
   return (
     <div className="weekView">

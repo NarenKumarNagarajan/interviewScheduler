@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import { useSelector } from "react-redux";
 
-const useWeekOfMonth = () => {
+const useWeekDetails = () => {
   const selectedMonth = useSelector((state) => state.appSlice.selectedMonth);
   const selectedYear = useSelector((state) => state.appSlice.selectedYear);
 
@@ -43,4 +43,4 @@ const useWeekOfMonth = () => {
   return weeks;
 };
 
-export default useWeekOfMonth;
+export default useWeekDetails;
