@@ -22,22 +22,19 @@ const useWeekOfMonth = () => {
   let currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 });
 
   while (currentWeekStart <= lastDayOfMonth) {
-    const week = [];
-    eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd }).forEach(
-      (day) => {
-        if (isSameMonth(day, firstDayOfMonth)) {
-          week.push({
-            date: format(day, "yyyy-MM-dd"),
-            dayName: format(day, "EEEE"),
-          });
-        } else {
-          week.push({
-            date: "",
-            dayName: format(day, "EEEE"),
-          });
-        }
-      }
-    );
+    const week = eachDayOfInterval({
+      start: currentWeekStart,
+      end: currentWeekEnd,
+    }).map((day) => {
+      const dayName = format(day, "EEEE");
+      return {
+        date: isSameMonth(day, firstDayOfMonth)
+          ? format(day, "yyyy-MM-dd")
+          : "",
+        dayName,
+      };
+    });
+
     weeks.push(week);
     currentWeekStart = addDays(currentWeekEnd, 1);
     currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 });

@@ -6,7 +6,6 @@ import {
   startOfWeek,
 } from "date-fns";
 import { useSelector } from "react-redux";
-
 import useWeekOfMonth from "./useWeekOfMonth";
 
 const useWeekDates = () => {
@@ -17,8 +16,7 @@ const useWeekDates = () => {
   const eachWeek = weeksDetails[weekIndex];
 
   const parseDate = (dateString) => {
-    const [year, month, day] = dateString.split("-").map(Number);
-    return new Date(year, month - 1, day);
+    return new Date(dateString);
   };
 
   const getFirstAndLastDayOfWeek = (week, monthStart) => {
@@ -34,7 +32,6 @@ const useWeekDates = () => {
     const adjustedWeekStart = weekStart < monthStart ? monthStart : weekStart;
 
     const weekEnd = endOfWeek(lastDate, { weekStartsOn: 1 });
-
     const lastDayOfMonth = endOfMonth(monthStart);
     const adjustedWeekEnd = weekEnd > lastDayOfMonth ? lastDayOfMonth : weekEnd;
 

@@ -4,38 +4,36 @@ import { useSelector } from "react-redux";
 const useGetData = () => {
   const eventsData = useSelector((state) => state.dataSlice.eventsData);
 
-  let data = {};
-
-  eventsData.forEach((event) => {
-    const startDateString = event.start;
-    const endDateString = event.end;
-    const startDateObject = parseISO(startDateString);
-    const endDateObject = parseISO(endDateString);
+  const data = eventsData.reduce((acc, event) => {
+    const startDateObject = parseISO(event.start);
+    const endDateObject = parseISO(event.end);
     const date = format(startDateObject, "yyyy-MM-dd");
     const startTime = format(startDateObject, "h:mm a");
     const endTime = format(endDateObject, "h:mm a");
 
-    let timeSlot = `${startTime} - ${endTime}`;
-    let tempObj = {
+    const timeSlot = `${startTime} - ${endTime}`;
+    const tempObj = {
       id: event.id,
       interviewer: event.user_det.handled_by.username,
       jobRole: event.user_det.job_id.jobRequest_Role,
       link: event.link,
     };
 
-    if (!data[date]) {
-      data[date] = [];
+    if (!acc[date]) {
+      acc[date] = [];
     }
 
-    let dateObj = data[date].find((obj) => obj.hasOwnProperty(timeSlot));
+    let dateObj = acc[date].find((obj) => obj.hasOwnProperty(timeSlot));
 
     if (!dateObj) {
       dateObj = { [timeSlot]: [] };
-      data[date].push(dateObj);
+      acc[date].push(dateObj);
     }
 
     dateObj[timeSlot].push(tempObj);
-  });
+
+    return acc;
+  }, {});
 
   return data;
 };

@@ -29,3 +29,13 @@ export const TIME_RANGE = [
   "06 PM",
   "07 PM",
 ];
+
+export const DAYS_OF_WEEK = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
