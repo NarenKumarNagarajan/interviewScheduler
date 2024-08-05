@@ -28,6 +28,10 @@ export const TIME_RANGE = [
   "05 PM",
   "06 PM",
   "07 PM",
+  "08 PM",
+  "09 PM",
+  "10 PM",
+  "11 PM",
 ];
 
 export const DAYS_OF_WEEK = [

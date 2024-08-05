@@ -19,9 +19,9 @@ import useWeekFetch from "../customHook/useWeekFetch";
 
 const Calendar = () => {
   const dispatch = useDispatch();
-  const rangeSelected = useSelector((state) => state.appSlice.rangeSelected);
-  const selectedMonth = useSelector((state) => state.appSlice.selectedMonth);
-  const selectedYear = useSelector((state) => state.appSlice.selectedYear);
+  const { rangeSelected, selectedMonth, selectedYear } = useSelector(
+    (state) => state.appSlice
+  );
   const FirstLastDayOfWeek = useWeekFetch();
 
   const { formattedFirstDay, formattedLastDay } = useMemo(() => {
